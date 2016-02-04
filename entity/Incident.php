@@ -18,13 +18,12 @@ class Incident
 
     public function __construct($descr, $type, $adresse, $sev, $ref, $imgURI)
     {
-        //$_id = $id;
-        $_description = $descr;
-        $_type = $type;
-        $_adresse = $adresse;
-        $_severite = $sev;
-        $_reference = $ref;
-        $_imgURI = $imgURI;
+        $this->_description = $descr;
+        $this->_type = $type;
+        $this->_adresse = $adresse;
+        $this->_severite = $sev;
+        $this->_reference = $ref;
+        $this->_imgURI = $imgURI;
     }
 
     public function getDescription()
@@ -56,6 +55,5 @@ class Incident
     {
         return $this->_imgURI;
     }
-
 
 }

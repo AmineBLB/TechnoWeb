@@ -24,7 +24,7 @@
 </div>
 <br>
 
-<form action="index.html" method="post">
+<form action="form.html" method="post">
     <div class="login">
         <input type="text" placeholder="login" name="user"><br>
         <input type="password" placeholder="mot de passe" name="password"><br>
