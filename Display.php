@@ -24,6 +24,7 @@
             <th>Type</th>
             <th>Description</th>
             <th>Severite</th>
+            <th width="25%">Image</th>
             <th>Operations</th>
         </tr>
 
@@ -33,6 +34,7 @@
                 <td><?= $row['Type'] ?></td>
                 <td><?= $row['Description'] ?></td>
                 <td><?= $row['Severite'] ?></td>
+                <td><?php if (isset($row['Image']))?><img src="<?= $row['Image'] ?>" width="100%" height="30%"></td>
                 <td>
                     <button class="btn btn-danger" onclick="location.href='Display.php?id=<?=$row['Id']?>'">Supprimer</button>
                     </input>

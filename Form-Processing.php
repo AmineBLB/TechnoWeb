@@ -20,10 +20,24 @@ $email = $_POST['email'];
 $adresse = $_POST['adresse'];
 $numero = $_POST['numero'];
 $severite = $_POST['optionsRadios'];
-$photo = $_FILES['photo'];
+
 $description = $_POST['description'];
 $type = $_POST['typeIncident'];
 
+//$photo = $_FILES['photo'];
+echo basename($_FILES["photo"]["name"]);
+
+$info = pathinfo($_FILES['photo']['name']);
+$ext = $info['extension']; // get the extension of the file
+$newname = "$nom"."_photoIncident.".$ext;
+
+$target = 'ressource/photo/'.$newname;
+move_uploaded_file( $_FILES['photo']['tmp_name'], $target);
+
+//$target_Path = "ressource/photo/";
+//$target_Path = $target_Path.basename( $_FILES['photo']['name'] );
+//move_uploaded_file( $_FILES['photo']['tmp_name'], $target_Path );
+//
 
 if (isset($_POST['check_web']))
     $reference = $_POST['check_web'];
@@ -43,57 +57,26 @@ echo "severite : {$severite} <br />";
 echo "Référence : {$reference} <br />";
 
 if (isset($_FILES['photo'])) {
-    echo $_FILES['photo']['name'];
+    echo "Photo : ".$_FILES['photo']['name'];
 }
 
-echo "<h2>PHOTO INDISPONIBLE</h2>";
 
-$incident = new Incident($description, $type, $adresse, $severite, $reference, "");
+
+$incident = new Incident($description, $type, $adresse, $severite, $reference, $target);
 
 /*** La connection à la DB ***/
 $database = new Connection("localhost", "root", "root");
-//$db = $database->getPDO();
 
-$txt = "khra";
 /*** L'insertion dans la table incident ***/
-
-$count = $database->insertIntoIncident($incident, $txt);
+$count = $database->insertIntoIncident($incident);
 echo $count;
 
 /*** Déconnexion de la DB ***/
 $database->closeConnection();
 
-$html = "<br/><br/><button class=\"btn btn-success\" type=\"button\">Montrer les plaintes</button>";
+$html = "<br/><br/><button class=\"btn btn-success\" type=\"button\" onclick=\"window.location.href='Display.php'\">Montrer les plaintes</button>";
 echo $html;
 
-/*
-try {
-    $db = new PDO("mysql:host=localhost;dbname=mysql", "root", "root") or die(print_r($db->errorInfo(), true));
-    echo 'Connected to database';
-} catch (PDOException $e) {
-    echo $e->getMessage()."\n Erreur connection";
-}
-*/
-/*** L'insertion dans la table incident ***/
-/*try {
-    $rqt = "INSERT INTO Mairie.Incident(Description, Type, Adresse, Severite, Reference, Image)
-            VALUES ('$description', '$type', '$adresse', '$severite', '$reference','')";
-
-    $count = $db->exec($rqt) or die(print_r($db->errorInfo(), true));
-    echo 'Execution successfull'. "\n";
-    }
-catch (PDOException $e)
-    {
-    echo $e->getMessage() . "\n Erreur insertion";
-    }
-
-
-
-/*** Déconnexion de la DB ***/
-/*
-$db = null;
-echo 'Discoonnected from database'. "\n";
-*/
 
 ?>
 

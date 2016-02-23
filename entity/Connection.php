@@ -25,13 +25,14 @@ class Connection
         //echo 'Discoonnected from database';
     }
 
-    public function insertIntoIncident(Incident &$incident, $txt)
+    public function insertIntoIncident(Incident &$incident)
     {
         $description = $incident->getDescription();
         $type = $incident-> getType();
         $adresse = $incident-> getAdresse();
         $severite = $incident-> getReference();
         $reference = $incident-> getReference();
+        $target = $incident-> getImgURI();
 
         try {
             $count = $this->db->exec("INSERT INTO Mairie.Incident(Description, Type, Adresse, Severite, Reference, Image)
@@ -40,9 +41,11 @@ class Connection
                                               '$adresse',
                                               '$severite',
                                               '$reference',
-                                              '');"
+                                              '$target');"
                                     )
             or die(print_r($this->db->errorInfo(), true));
+
+
 
         }catch (PDOException $e)
         {
@@ -68,7 +71,7 @@ class Connection
                 WHERE Incident.Id = $id;";
         $delete = $this -> db -> prepare($rqt);
         $delete ->execute();
-        echo "Delete";
+        echo "Delete completed";
     }
 
 }
